@@ -1,0 +1,290 @@
+swagger: "2.0"
+info:
+  description: "This is Flipkart Swagger Server for documentation of REST APIs."
+  version: "1.0.0"
+  title: "Flipkart"
+tags:
+- name: "Product"
+  description: "Everything about Authorization"
+- name: "User"
+  description: "Everything about User Details"
+
+paths:
+
+# AUTH ROUTES
+  /signup:
+    post:
+      tags:
+      - "User"
+      summary: "Add a new user to the database"
+      description: "Register a user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be added to the DB"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "Successfully created the user"
+        "500":
+          description: "Error creating the user"
+    get:
+      tags:
+      - "User"
+      summary: "Add a new user to the database"
+      description: "Register a user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+     
+        
+      responses:
+        "201":
+          description: "Successfully created the user"
+          schema:
+            $ref: "#/definitions/User"  
+        "500":
+          description: "Error creating the user"    
+  /login:
+    post:
+      tags:
+      - "User"
+      summary: "Logs user into the system"
+      description: "Login the user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that is fetched from DB"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Successfully logged the user"
+        "500":
+          description: "Error logging the user"  
+        "401": 
+          description: "Wrong Credentials!"
+
+
+  /products:
+    post:
+      tags:
+      - "Product"
+      summary: "Logs user into the system"
+      description: "Login the user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User object that is fetched from DB"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        "200":
+          description: "Successfully logged the user"
+        "500":
+          description: "Error logging the user"  
+        "401": 
+          description: "Wrong Credentials!"
+    get:
+      tags:
+      - "Product"
+      summary: "Add a new user to the database"
+      description: "Register a user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+     
+        
+      responses:
+        "201":
+          description: "Successfully created the user"
+          schema:
+            $ref: "#/definitions/Product"  
+        "500":
+          description: "Error creating the user"    
+
+# USER ROUTES           
+  /api/users:
+    get:
+      tags:
+      - "User"
+      summary: "Get all user details"
+      description: "Get All users"
+      # operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "500":
+          description: "Error performing the operation"
+  /api/users/find/{userID}:
+    get:
+      tags:
+      - "User"
+      summary: "Get user details by userID"
+      description: "Get the user details by UserID"
+      # operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userID"
+        in: "path"
+        description: "The user deatils that needs to be fetched by userID "
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "400":
+          description: "Invalid userID supplied"
+        "404":
+          description: "User not found"
+        "500":
+          description: "Error performing the operation"
+  /api/users/{userID}:
+    put:
+      tags:
+      - "User"
+      summary: "Update an existing user"
+      description: ""
+      operationId: "updateUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userID"
+        in: "path"
+        description: "The userID of the user that needs to be deleted"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "User object that needs to be updated to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Invalid UserID supplied"
+        "404":
+          description: "User not found"
+        "405":
+          description: "Validation exception"
+        "500":
+          description: "Not Authenticated"
+    delete:
+      tags:
+      - "User"
+      summary: "Delete the user by userID "
+      description: "This can only be done by the logged in user."
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userID"
+        in: "path"
+        description: "The userID of the user that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Deleted user Successfully"
+        "400":
+          description: "Invalid userID supplied"
+        "404":
+          description: "User not found"
+        "500":
+          description: "Error performing the operation"
+  /api/users/stats:  
+    get:
+      tags:
+      - "User"
+      summary: "Get all user statistics"
+      description: "Get All user statistics"
+      # operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "500":
+          description: "Invalid Operation" 
+
+              
+definitions:
+  User:
+    type: "object"
+    properties:
+      firstname:
+        type: "string"
+      lastname:
+        type: "string"
+      username:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+    xml:
+      name: "User"    
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      url: 
+        type: "string"
+        format: "int32"
+      detailUrl:
+        type: "string"
+        format: "int32"
+      description:
+        type: "string"
+        format: "int32"
+      discount:
+        type: "string"
+        format: "int32"
+      tagline:
+        type: "string"
+        format: "int32"
+    xml:
+      name: "Product"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"
+  
